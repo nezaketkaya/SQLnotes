@@ -1,0 +1,95 @@
+Calculations performed on multiple rows of a table are called aggregates.
+
+         *** SUMMARY ***
+COUNT(): count the number of rows
+SUM(): the sum of the values in a column
+MAX()/MIN(): the largest/smallest value
+AVG(): the average of the values in a column
+ROUND(): round the values in the column
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# COUNT() is a function that takes the name of a column as an argument and counts the number of non-empty values in that column.
+
+SELECT COUNT(*)
+FROM table_name;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# SUM() is a function that takes the name of a column as an argument and returns the sum of all the values in that column.
+
+SELECT SUM(downloads)
+FROM fake_apps;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# The MAX() and MIN() functions return the highest and lowest values in a column, respectively.
+
+SELECT MAX(downloads)
+FROM fake_apps;
+
+??? If multiple rows have the minimum or maximum value, which one is returned when using MAX/MIN?
+--- Typically, when you have more than one row that contains the minimum or maximum value in a column, the topmost row containing that value will be returned in the result.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# The AVG() function works by taking a column name as an argument and returns the average value for that column.
+
+SELECT AVG(downloads)
+FROM fake_apps;
+
+??? In SQL, how can we get the average of only the unique values of a column?
+--- We could use the DISTINCT clause right before the column name.
+
+SELECT AVG(DISTINCT price)
+FROM fake_apps;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# ROUND() rounds the values in the column to the number of decimal places specified by the integer.
+
+SELECT name, ROUND(price, 0)
+FROM fake_apps;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# GROUP BY is a clause in SQL that is used with aggregate functions. It is used in collaboration with the SELECT statement to arrange identical data into groups.
+# The GROUP BY statement comes after any WHERE statements, but before ORDER BY or LIMIT.
+
+SELECT year,
+   AVG(imdb_rating)
+FROM movies
+GROUP BY year
+ORDER BY year;
+
+??? When using the GROUP BY clause, do we always have to group by one of the selected columns listed after SELECT?
+--- No, you can GROUP BY a column that was not included in the SELECT statement.
+
+SELECT name, downloads
+FROM fake_apps
+GROUP BY price;
+.........................................................................
+SELECT ROUND(imdb_rating),
+   COUNT(name)
+FROM movies
+GROUP BY ROUND(imdb_rating)
+ORDER BY ROUND(imdb_rating);
+
+SELECT ROUND(imdb_rating),
+   COUNT(name)
+FROM movies
+GROUP BY 1             // 1 refers to the first column in our SELECT statement, ROUND(imdb_rating).
+ORDER BY 1;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## HAVING limit the results of a query based on an aggregate property.
+## When we want to limit the results of a query based on values of the individual rows, use WHERE.
+## When we want to limit the results of a query based on an aggregate property, use HAVING.
+## HAVING statement always comes after GROUP BY, but before ORDER BY and LIMIT.
+
+?? To return a result set of the number (count) of students from each country if the total number is less than 25:
+
+SELECT COUNT(student_name),
+  birth_country
+FROM students
+GROUP BY birth_country
+HAVING COUNT(student_name) < 25;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
