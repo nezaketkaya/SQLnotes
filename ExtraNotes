@@ -1,0 +1,4 @@
+# CSV files do no have data types; everything is a string.
+# To convert all values in a column into a number, use something like this:
+
+UPDATE MyTable SET MyColumn = CAST(MyColumn AS INTEGER)
