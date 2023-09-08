@@ -71,17 +71,40 @@ CREATE TABLE celebs (
    name TEXT UNIQUE,
    date_of_birth TEXT NOT NULL,
    date_of_death TEXT DEFAULT 'Not Applicable' );
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+# AS is allows you to rename a column or table using an alias.
 
+SELECT name AS 'Titles' FROM movies;
 
+# We can alias multiple columns at a time in the same query.
 
+SELECT course_id AS "Course ID", exercise_id AS "Exercise ID" 
+FROM bugs;
+--------------------------------------------------------------------------------------------------------------------------------------------
+# DISTINCT is used to return unique values in the output.
 
+SELECT tools 
+FROM inventory;
 
+tools
+Hammer           
+Nails
+Nails
+Nails
+........................
+SELECT DISTINCT tools 
+FROM inventory;
 
+tools
+Hammer
+Nails
+--------------------------------------------------------------------------------------------------------------------------------------------
+# Two columns can be compared using WHERE
 
-
-
-
-
+SELECT x, y
+FROM coordinates
+WHERE x > y;
 
 
 
