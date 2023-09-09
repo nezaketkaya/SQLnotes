@@ -1,0 +1,69 @@
+# Both orders table and subscriptions table have a subscription_id column.
+
+SELECT *
+FROM orders
+JOIN subscriptions
+  ON orders.subscription_id = subscriptions.subscription_id;
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# We use a LEFT JOIN when we want every row from the first table, regardless of whether there is a matching row from the second table.
+
+SELECT *
+FROM newspaper
+LEFT JOIN online
+     ON newspaper.id = online.id;
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# Primary keys have a few requirements:
+
+* None of the values can be NULL.
+* Each value must be unique (i.e., you can’t have two customers with the same customer_id in the customers table).
+* A table can not have more than one primary key column.
+
+# When the primary key for one table appears in a different table, it is called a FOREIGN KEY.
+# So customer_id is a primary key when it appears in customers, but a foreign key when it appears in orders.
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+# CROSS JOIN lets us combine all rows of one table with all rows of another table.
+
+SELECT shirts.shirt_color,
+pants.pants_color,
+socks.sock_color
+FROM shirts
+CROSS JOIN pants
+CROSS JOIN socks;
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# UNION operator allows us to stack one dataset on top of the other.
+# Tables must have the same number of columns, and the columns must have the same data types in the same order as the first table.
+
+SELECT *
+FROM table1
+UNION
+SELECT *
+FROM table2;
+
+??? What happens if the tables we perform the UNION operator on have duplicate rows?
+--- Duplicate rows will be excluded.
+--- If, however, you wanted to include duplicates, certain versions of SQL provides the UNION ALL operator.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+# WITH allows us to define one or more temporary tables that can be used in the final query.
+
+WITH TopCustomers AS (
+    SELECT CustomerID, SUM(OrderTotal) AS TotalSpent
+    FROM Orders
+    GROUP BY CustomerID
+    HAVING SUM(OrderTotal) > 1000
+)
+SELECT Customers.Name, TopCustomers.TotalSpent
+FROM Customers
+JOIN TopCustomers ON Customers.ID = TopCustomers.CustomerID;
+
+
+
+
+
+
+
+
+
+
+
+
+
